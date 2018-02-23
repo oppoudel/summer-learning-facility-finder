@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <v-navigation-drawer persistent :clipped="clipped" v-model="drawer" enable-resize-watcher fixed app width="350">
+    <v-navigation-drawer persistent :clipped="clipped" v-model="drawer" enable-resize-watcher fixed app width="370">
       <v-toolbar flat>
         <v-list>
           <v-list-tile color="primary">
             <v-list-tile-title class="title">
-              Filter Facilities
+              Select Summer Programs by Criteria:
             </v-list-tile-title>
           </v-list-tile>
         </v-list>
@@ -28,17 +28,21 @@
     <v-toolbar app color="primary" :clipped-left="clipped" dense dark>
       <v-toolbar-side-icon @click.stop="drawer = !drawer" class="hidden-lg-and-up"></v-toolbar-side-icon>
       <v-toolbar-items class="ml-5">
-        <button><img src="./assets/logo.png" alt="Baltimore City Logo" height="30px"></button>
+        <router-link to="/">
+          <button><img src="./assets/logo.png" alt="Baltimore City Logo" height="30px"></button>
+        </router-link>
       </v-toolbar-items>
       <v-toolbar-title>Summer Learning Baltimore</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat>List of Facilities</v-btn>
+        <router-link to="/facilities">
+          <v-btn flat>List of Facilities</v-btn>
+        </router-link>
       </v-toolbar-items>
     </v-toolbar>
     <v-content>
       <v-container>
-        <MapboxMap></MapboxMap>
+        <router-view></router-view>
       </v-container>
     </v-content>
   </v-app>
@@ -46,6 +50,7 @@
 
 <script>
 import MapboxMap from './components/MapboxMap.vue';
+import Facilities from './components/Facilities.vue';
 
 export default {
   data() {
@@ -67,7 +72,8 @@ export default {
   },
   name: 'App',
   components: {
-    MapboxMap
+    MapboxMap,
+    Facilities
   },
   created() {
     this.$store.dispatch('loadFeatures');
@@ -85,6 +91,11 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
+a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
+
