@@ -1,19 +1,16 @@
 <template>
   <v-app>
-    <v-navigation-drawer persistent :clipped="clipped" v-model="drawer" enable-resize-watcher fixed app width="370">
-      <v-toolbar flat>
-        <v-list>
-          <v-list-tile color="primary">
-            <v-list-tile-title class="title">
-              Select Summer Programs by Criteria:
-            </v-list-tile-title>
-          </v-list-tile>
-        </v-list>
+    <v-navigation-drawer persistent :clipped="clipped" v-model="drawer" enable-resize-watcher app width="370">
+      <v-toolbar flat dense color="primary--text">
+        <v-toolbar-title class="subheading">Select Summer Programs by Criteria:</v-toolbar-title>
       </v-toolbar>
       <v-divider></v-divider>
       <v-list>
         <v-list-tile class="mt-2">
           <v-select label="Meals Served" :items="boolean" v-model="mealsServed" chips></v-select>
+        </v-list-tile>
+        <v-list-tile class="mt-2">
+          <v-select label="Ages Served" :items="ages" v-model="agesServed" chips></v-select>
         </v-list-tile>
         <v-list-tile class="mt-4 mb-2">
           <v-select label="Days Open" :items="days" item-text="day" item-value="abbr" v-model="daysOpen" multiple chips></v-select>
@@ -32,11 +29,23 @@
           <button><img src="./assets/logo.png" alt="Baltimore City Logo" height="30px"></button>
         </router-link>
       </v-toolbar-items>
-      <v-toolbar-title>Summer Learning Baltimore</v-toolbar-title>
+      <v-toolbar-title>Summer Learning Programs</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
+        <router-link to="/">
+          <v-btn flat class="white--text" dark>
+            Map View
+            <v-icon>location_on</v-icon>
+          </v-btn>
+        </router-link>
         <router-link to="/facilities">
-          <v-btn flat>List of Facilities</v-btn>
+          <v-btn flat class="white--text" dark>
+            List of Facilities
+            <v-badge color="purple" overlap class="ml-2">
+              <span slot="badge">{{updatedFeatures.length}}</span>
+              <v-icon>apps</v-icon>
+            </v-badge>
+          </v-btn>
         </router-link>
       </v-toolbar-items>
     </v-toolbar>
@@ -66,8 +75,10 @@ export default {
         { day: 'Thursday', abbr: 'Th' },
         { day: 'Friday', abbr: 'F' }
       ],
+      ages: ['Elementary', 'Middle School', 'High School'],
       mealsServed: '',
-      daysOpen: []
+      daysOpen: [],
+      agesServed: ''
     };
   },
   name: 'App',
@@ -80,12 +91,21 @@ export default {
   },
   methods: {
     submitData() {
-      const data = { DaysOpen: this.daysOpen, MealsServe: this.mealsServed };
+      const data = {
+        DaysOpen: this.daysOpen,
+        MealsServe: this.mealsServed,
+        AgesServed: this.agesServed
+      };
       this.$store.commit('UPDATE_FEATURES', data);
     },
     reset() {
-      (this.mealsServed = ''), (this.daysOpen = []);
+      (this.mealsServed = ''), (this.daysOpen = []), (this.agesServed = ' ');
       this.$store.commit('RESET');
+    }
+  },
+  computed: {
+    updatedFeatures() {
+      return this.$store.getters.getupdatedFacilities || [];
     }
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <v-select autocomplete label="Search Address" :loading="loading" :items="items.map(item => item.address)" hide-details single-line :search-input.sync="search" prepend-icon="search" v-model="select" @change="addressChanged"></v-select>
+  <v-select autocomplete label="Search Address" :loading="loading" :items="items.map(item => item.address)" hide-details single-line :search-input.sync="search" prepend-icon="search" v-model="select" @change="addressChanged" class="primary--text"></v-select>
 </template>
 <script>
 const locatorURL =
@@ -15,7 +15,7 @@ export default {
   },
   watch: {
     search(val) {
-      val && this.querySelections(val);
+      val && val.length > 3 && this.querySelections(val);
     }
   },
   methods: {

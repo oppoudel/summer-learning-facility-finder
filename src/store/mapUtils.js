@@ -10,12 +10,20 @@ export const flyToFacility = (currentFeature, map) => {
 export const createPopUp = (currentFeature, map) => {
   var popUps = document.getElementsByClassName('mapboxgl-popup');
   if (popUps[0]) popUps[0].remove();
-
+  let distance;
+  if (currentFeature.properties.distance) {
+    distance = `<h4>${currentFeature.properties.distance.toFixed(
+      2
+    )} miles away</h4>`;
+  } else {
+    distance = '';
+  }
   new mapboxgl.Popup({ closeOnClick: false })
     .setLngLat(currentFeature.geometry.coordinates)
     .setHTML(
       `<h3>${currentFeature.properties.ProgramNam}</h3>
       <h4>${currentFeature.properties.Address}</h4>
+      ${distance}
       `
     )
     .addTo(map);
@@ -31,7 +39,7 @@ export const addSources = (map, facilities, updatedFacilities) => {
     type: 'symbol',
     source: 'facilities',
     layout: {
-      'icon-image': 'marker-15',
+      'icon-image': 'star-15',
       'icon-allow-overlap': true
     },
     paint: {}
@@ -56,7 +64,7 @@ export const addSources = (map, facilities, updatedFacilities) => {
     type: 'circle',
     paint: {
       'circle-radius': 8,
-      'circle-color': '#00ff00'
+      'circle-color': '#000000'
     }
   });
 };
