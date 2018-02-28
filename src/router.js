@@ -16,6 +16,5 @@ export default new Router({
       component: Facilities,
       name: 'facilities'
     }
-  ],
-  mode: 'history'
+  ]
 });
