@@ -34,6 +34,19 @@ export const addSources = (map, facilities, updatedFacilities) => {
     type: 'geojson',
     data: updatedFacilities ? updatedFacilities : facilities
   });
+  map.addSource('facilities1', {
+    type: 'geojson',
+    data: updatedFacilities ? updatedFacilities : facilities
+  });
+  map.addLayer({
+    id: 'facilities1',
+    type: 'circle',
+    source: 'facilities',
+    paint: {
+      'circle-radius': 8,
+      'circle-color': '#ff4500'
+    }
+  });
   map.addLayer({
     id: 'facilities',
     type: 'symbol',
@@ -44,6 +57,7 @@ export const addSources = (map, facilities, updatedFacilities) => {
     },
     paint: {}
   });
+
   map.addSource('single-point', {
     type: 'geojson',
     data: {

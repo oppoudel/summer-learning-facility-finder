@@ -12,24 +12,24 @@
         <v-list-tile class="mt-2">
           <v-select label="Ages Served" :items="ages" v-model="agesServed" chips></v-select>
         </v-list-tile>
-        <v-list-tile class="mt-4 mb-2">
+        <v-list-tile class="mt-5 mb-5">
           <v-select label="Days Open" :items="days" item-text="day" item-value="abbr" v-model="daysOpen" multiple chips></v-select>
         </v-list-tile>
-        <v-list-tile class="mt-4">
+        <v-list-tile class="mt-5">
           <v-btn @click="submitData" dark color="primary">Submit</v-btn>
           <v-spacer></v-spacer>
           <v-btn @click="reset" dark color="error">Reset</v-btn>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar app color="primary" :clipped-left="clipped" dense dark>
+    <v-toolbar app color="primary" :clipped-left="clipped" dark>
       <v-toolbar-side-icon @click.stop="drawer = !drawer" class="hidden-lg-and-up"></v-toolbar-side-icon>
-      <v-toolbar-items class="ml-5">
+      <v-toolbar-items class="ml-5 hidden-sm-and-down">
         <router-link to="/">
           <button><img src="./assets/logo.png" alt="Baltimore City Logo" height="30px"></button>
         </router-link>
       </v-toolbar-items>
-      <v-toolbar-title>Summer Learning Programs</v-toolbar-title>
+      <v-toolbar-title>SummerScape</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
         <router-link to="/">
@@ -69,11 +69,13 @@ export default {
       fixed: true,
       boolean: ['Yes', 'No'],
       days: [
+        { day: 'Sunday', abbr: 'Su' },
         { day: 'Monday', abbr: 'M' },
         { day: 'Tuesday', abbr: 'Tu' },
         { day: 'Wednesday', abbr: 'W' },
         { day: 'Thursday', abbr: 'Th' },
-        { day: 'Friday', abbr: 'F' }
+        { day: 'Friday', abbr: 'F' },
+        { day: 'Saturday', abbr: 'Sa' }
       ],
       ages: ['Elementary', 'Middle School', 'High School'],
       mealsServed: '',

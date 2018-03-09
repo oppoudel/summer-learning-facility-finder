@@ -35,6 +35,7 @@ export const store = new Vuex.Store({
       state.mapboxMap.on('load', () => {
         addSources(map, state.facilities, state.updatedFacilities);
         state.mapboxMap.on('click', 'facilities', e => {
+          console.log(e);
           createPopUp(e.features[0], map);
           flyToFacility(e.features[0], map);
         });
@@ -168,9 +169,9 @@ export const store = new Vuex.Store({
     createMap({ commit }) {
       const map = new mapboxgl.Map({
         container: 'map-view',
-        style: 'mapbox://styles/mapbox/light-v9',
-        center: [-76.6138, 39.3062],
-        zoom: 12
+        style: 'mapbox://styles/mapbox/streets-v9',
+        center: [-76.5815, 39.2895],
+        zoom: 11
       });
       map.addControl(new mapboxgl.NavigationControl());
 
