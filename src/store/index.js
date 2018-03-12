@@ -3,9 +3,10 @@ import Vuex from 'vuex';
 import Terraformer from 'terraformer';
 Terraformer.ArcGIS = require('terraformer-arcgis-parser');
 import mapboxgl from 'mapbox-gl';
-import { flyToFacility, createPopUp, addSources } from './mapUtils';
 import nearestPoint from '@turf/nearest-point';
 import distance from '@turf/distance';
+import appService from '../appService';
+import { flyToFacility, createPopUp, addSources } from './mapUtils';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
@@ -149,10 +150,7 @@ export const store = new Vuex.Store({
   },
   actions: {
     async loadFeatures({ commit }) {
-      const response = await fetch(
-        'https://maps.baltimorecity.gov/egis/rest/services/SummerLearning/Summer/MapServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=pjson'
-      );
-      const results = await response.json();
+      const results = await appService.getFeatures();
 
       let FeatureCollection = {
         type: 'FeatureCollection',

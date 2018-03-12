@@ -10,6 +10,7 @@
   "dependencies": {
     "@turf/distance": "^6.0.0",
     "@turf/nearest-point": "^5.1.5",
+    "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "mapbox-gl": "^0.44.1",
     "terraformer": "^1.0.8",
@@ -26,17 +27,26 @@
     "vue-template-compiler": "^2.5.13"
   },
   "babel": {
-    "presets": ["@vue/app"]
+    "presets": [
+      "@vue/app"
+    ]
   },
   "eslintConfig": {
     "root": true,
-    "extends": ["plugin:vue/essential", "eslint:recommended"]
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ]
   },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
     }
   },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"],
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
   "homepage": "https://gis.baltimorecity.gov/summer"
 }
