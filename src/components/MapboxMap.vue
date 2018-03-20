@@ -1,22 +1,12 @@
 <template>
   <v-card id="map-view">
-    <v-toolbar floating dense id="toolbar">
-      <AddressSearch></AddressSearch>
-      <v-btn icon>
-        <v-icon>more_vert</v-icon>
-      </v-btn>
-    </v-toolbar>
   </v-card>
 </template>
 
 <script>
-import AddressSearch from './AddressSearch.vue';
-
 export default {
   name: 'MapboxMap',
-  components: {
-    AddressSearch
-  },
+
   mounted() {
     this.$store.dispatch('createMap');
   }

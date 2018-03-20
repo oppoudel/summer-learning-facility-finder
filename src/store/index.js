@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import Terraformer from 'terraformer';
 Terraformer.ArcGIS = require('terraformer-arcgis-parser');
 import mapboxgl from 'mapbox-gl';
-import nearestPoint from '@turf/nearest-point';
+//import nearestPoint from '@turf/nearest-point';
 import distance from '@turf/distance';
 import appService from '../appService';
 import { flyToFacility, createPopUp, addSources } from './mapUtils';
@@ -36,7 +36,6 @@ export const store = new Vuex.Store({
       state.mapboxMap.on('load', () => {
         addSources(map, state.facilities, state.updatedFacilities);
         state.mapboxMap.on('click', 'facilities', e => {
-          console.log(e);
           createPopUp(e.features[0], map);
           flyToFacility(e.features[0], map);
         });
@@ -88,15 +87,17 @@ export const store = new Vuex.Store({
       state.mapboxMap.getSource('facilities').setData(state.facilities);
     },
     ADDRESS_CHANGED(state, location) {
-      //state.mapboxMap.flyTo({ center: location, zoom: 14 });
-      state.mapboxMap
-        .getSource('single-point')
-        .setData({ type: 'Point', coordinates: location });
+      if (state.mapboxMap) {
+        state.mapboxMap.flyTo({ center: location, zoom: 14 });
+        state.mapboxMap
+          .getSource('single-point')
+          .setData({ type: 'Point', coordinates: location });
+      }
       let facilities = state.updatedFacilities
         ? state.updatedFacilities
         : state.facilities;
       //Find the closest facility from the Address and zoom to it on the map
-      const nearestFacility = nearestPoint(
+      /*const nearestFacility = nearestPoint(
         { type: 'Point', coordinates: location },
         facilities
       );
@@ -126,8 +127,8 @@ export const store = new Vuex.Store({
           {
             padding: 200
           }
-        );
-      }
+        ); 
+      }*/
       //Calculate the distance from the Address to each feature and add that as distance attribute
       const options = { units: 'miles' };
       facilities.features.forEach(feature => {
@@ -145,7 +146,7 @@ export const store = new Vuex.Store({
       facilities.features.sort(
         (a, b) => a.properties.distance - b.properties.distance
       );
-      createPopUp(nearestFacility, state.mapboxMap);
+      //createPopUp(nearestFacility, state.mapboxMap);
     }
   },
   actions: {

@@ -1,6 +1,11 @@
 <template>
   <v-app>
     <v-navigation-drawer persistent :clipped="clipped" v-model="drawer" enable-resize-watcher app width="370">
+      <v-list>
+        <v-list-tile class="mt-3">
+          <AddressSearch></AddressSearch>
+        </v-list-tile>
+      </v-list>
       <v-toolbar flat dense color="primary--text">
         <v-toolbar-title class="subheading">Select Summer Programs by Criteria:</v-toolbar-title>
       </v-toolbar>
@@ -25,21 +30,19 @@
     <v-toolbar app color="primary" :clipped-left="clipped" dark>
       <v-toolbar-side-icon @click.stop="drawer = !drawer" class="hidden-lg-and-up"></v-toolbar-side-icon>
       <v-toolbar-items class="ml-5 hidden-sm-and-down">
-        <router-link to="/">
-          <button><img src="./assets/logo.png" alt="Baltimore City Logo" height="30px"></button>
-        </router-link>
+        <button><img src="./assets/logo.png" alt="Baltimore City Logo" height="30px"></button>
       </v-toolbar-items>
       <v-toolbar-title>SummerScape</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
         <router-link to="/">
-          <v-btn flat class="white--text" dark>
+          <v-btn depressed large class="white--text" color="primary" dark>
             Map View
             <v-icon>location_on</v-icon>
           </v-btn>
         </router-link>
         <router-link to="/facilities">
-          <v-btn flat class="white--text" dark>
+          <v-btn depressed large class="white--text" color="primary" dark>
             List of Facilities
             <v-badge color="purple" overlap class="ml-2">
               <span slot="badge">{{updatedFeatures.length}}</span>
@@ -60,6 +63,7 @@
 <script>
 import MapboxMap from './components/MapboxMap.vue';
 import Facilities from './components/Facilities.vue';
+import AddressSearch from './components/AddressSearch';
 
 export default {
   data() {
@@ -86,7 +90,8 @@ export default {
   name: 'App',
   components: {
     MapboxMap,
-    Facilities
+    Facilities,
+    AddressSearch
   },
   created() {
     this.$store.dispatch('loadFeatures');
@@ -101,7 +106,7 @@ export default {
       this.$store.commit('UPDATE_FEATURES', data);
     },
     reset() {
-      (this.mealsServed = ''), (this.daysOpen = []), (this.agesServed = ' ');
+      (this.mealsServed = ' '), (this.daysOpen = []), (this.agesServed = ' ');
       this.$store.commit('RESET');
     }
   },
@@ -118,6 +123,16 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.router-link-active {
+  height: 100%;
+}
+.router-link-exact-active {
+  border-bottom: solid 3px white;
+}
+.btn,
+.btn.btn__content {
+  height: 100%;
 }
 </style>
 
