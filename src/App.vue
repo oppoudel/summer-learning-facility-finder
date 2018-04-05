@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer persistent :clipped="clipped" v-model="drawer" enable-resize-watcher app width="370">
+    <v-navigation-drawer persistent :clipped="clipped" v-model="drawer" enable-resize-watcher app width="320">
       <v-list>
         <v-list-tile class="mt-3">
           <AddressSearch></AddressSearch>
@@ -29,32 +29,39 @@
     </v-navigation-drawer>
     <v-toolbar app color="primary" :clipped-left="clipped" dark>
       <v-toolbar-side-icon @click.stop="drawer = !drawer" class="hidden-lg-and-up"></v-toolbar-side-icon>
-      <v-toolbar-items class="ml-5 hidden-sm-and-down">
-        <button><img src="./assets/logo.png" alt="Baltimore City Logo" height="30px"></button>
+      <v-toolbar-items class="ml-2 hidden-sm-and-down logo_image">
+        <img src="./assets/logo.png" alt="Baltimore City Logo" height="30px">
       </v-toolbar-items>
       <v-toolbar-title>SummerScape</v-toolbar-title>
+      <v-toolbar-items></v-toolbar-items>
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down">
+      <v-toolbar-items>
         <router-link to="/">
           <v-btn depressed large class="white--text" color="primary" dark>
-            Map View
+            <span class="hidden-sm-and-down">Map View</span>
             <v-icon>location_on</v-icon>
           </v-btn>
         </router-link>
         <router-link to="/facilities">
           <v-btn depressed large class="white--text" color="primary" dark>
-            List of Facilities
+            <span class="hidden-sm-and-down">List of Facilities</span>
             <v-badge color="purple" overlap class="ml-2">
               <span slot="badge">{{updatedFeatures.length}}</span>
               <v-icon>apps</v-icon>
             </v-badge>
           </v-btn>
         </router-link>
+        
       </v-toolbar-items>
+      <v-toolbar-items class="google"><div id="google_translate_element" class="hidden-sm-and-down"></div></v-toolbar-items>
     </v-toolbar>
     <v-content>
       <v-container>
-        <router-view></router-view>
+        <v-slide-x-transition mode="in-out">
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
+        </v-slide-x-transition>
       </v-container>
     </v-content>
   </v-app>
@@ -106,7 +113,7 @@ export default {
       this.$store.commit('UPDATE_FEATURES', data);
     },
     reset() {
-      (this.mealsServed = ' '), (this.daysOpen = []), (this.agesServed = ' ');
+      (this.mealsServed = ''), (this.daysOpen = []), (this.agesServed = '');
       this.$store.commit('RESET');
     }
   },
@@ -119,6 +126,9 @@ export default {
 </script>
 
 <style scoped>
+.logo_image {
+  align-items: center;
+}
 a {
   display: flex;
   justify-content: center;
@@ -134,5 +144,8 @@ a {
 .btn.btn__content {
   height: 100%;
 }
+.google {
+  justify-content: center;
+  align-items: center;
+}
 </style>
-

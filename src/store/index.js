@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import Terraformer from 'terraformer';
-Terraformer.ArcGIS = require('terraformer-arcgis-parser');
 import mapboxgl from 'mapbox-gl';
 //import nearestPoint from '@turf/nearest-point';
 import distance from '@turf/distance';
@@ -84,11 +82,11 @@ export const store = new Vuex.Store({
 
     RESET(state) {
       state.updatedFacilities = null;
-      state.mapboxMap.getSource('facilities').setData(state.facilities);
+      state.mapboxMap && state.mapboxMap.getSource('facilities').setData(state.facilities);
     },
     ADDRESS_CHANGED(state, location) {
       if (state.mapboxMap) {
-        state.mapboxMap.flyTo({ center: location, zoom: 14 });
+        state.mapboxMap.flyTo({ center: location, zoom: 13 });
         state.mapboxMap
           .getSource('single-point')
           .setData({ type: 'Point', coordinates: location });
@@ -153,17 +151,7 @@ export const store = new Vuex.Store({
     async loadFeatures({ commit }) {
       const results = await appService.getFeatures();
 
-      let FeatureCollection = {
-        type: 'FeatureCollection',
-        features: []
-      };
-
-      results.features.map((point, i) => {
-        const feature = Terraformer.ArcGIS.parse(point);
-        feature.id = i;
-        FeatureCollection.features.push(feature);
-      });
-      commit('LOAD_FEATURES', FeatureCollection);
+      commit('LOAD_FEATURES', results);
     },
     createMap({ commit }) {
       const map = new mapboxgl.Map({

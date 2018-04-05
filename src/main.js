@@ -3,7 +3,6 @@ import App from './App.vue';
 import Vuetify from 'vuetify';
 import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
 import 'vuetify/dist/vuetify.min.css';
-import 'babel-polyfill';
 import router from './router';
 import { store } from './store';
 

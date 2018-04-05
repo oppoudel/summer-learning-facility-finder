@@ -9,8 +9,8 @@
                 <v-toolbar flat dense color="primary--text">
                   <v-toolbar-title class="subheading">{{feature.properties.ProgramNam}}</v-toolbar-title>
                 </v-toolbar>
-                <v-list two-line>
-                  <v-list-tile>
+                <v-list three-line dense>
+                  <v-list-tile class="condensed">
                     <v-list-tile-action>
                       <v-icon color="primary">business</v-icon>
                     </v-list-tile-action>
@@ -40,6 +40,8 @@
                     </v-list-tile-content>
                   </v-list-tile>
                   <v-divider inset></v-divider>
+                  <v-card-title class="description">We offer a variety of activities and operate from June 24 – August 30. We have weekly Field Trips, and students will learn about the arts and STEM from professionals. In this program youth speak English, Spanish, Khmer, and Cantonese, and staff speak English and Spanish. There is always a bilingual Spanish staff person present.  Meals are served at this program.</v-card-title>
+                  <v-divider inset></v-divider>
                   <v-list-tile v-if="feature.properties.distance">
                     <v-list-tile-action>
                       <v-icon color="primary">linear_scale</v-icon>
@@ -66,4 +68,11 @@ export default {
   }
 };
 </script>
-
+<style>
+.condensed {
+  height: 56px;
+}
+.description {
+  color: rgba(0, 0, 0, 0.56);
+}
+</style>
